@@ -36,12 +36,10 @@ public class MainActivity extends AppCompatActivity {
 
     // instance fields (only have values for specific activties/clients)
     AsyncHttpClient client;
-    // the base url for loading images
-    String imageBaseUrl;
-    // the poster size when fetching images
-    String posterSize;
     // list of currently playing movies
     ArrayList<Movie> movies;
+    // image config
+    Config config;
 
     RecyclerView rvMovies; // recycler view of movies
     MovieAdapter adapter; // adapter wired to the recycler view
@@ -119,18 +117,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
-                    // go to images so then you can get secure_base_url
-                    JSONObject images = response.getJSONObject("images");
+                    config = new Config(response);
+                    Log.i(TAG, String.format("Loaded configuration with imageBaseUrl %s and posterSize %s",
+                            config.getImageBaseUrl(),
+                            config.getPosterSize()));
 
-                    // get the image base url
-                    imageBaseUrl = images.getString("secure_base_url");
-
-                    // get the poster size
-                    JSONArray posterSizeOptions = images.getJSONArray("poster_sizes");
-
-                    // use the options at index 3 of poster_sizes (fallback is w342)
-                    posterSize = posterSizeOptions.optString(3, "w342");
-                    Log.i(TAG, String.format("Loaded configuration with imageBaseUrl %s and posterSize %s", imageBaseUrl, posterSize));
+                    // pass config to adapter
+                    adapter.setConfig(config);
 
                     // ensures correct order
                     getNowPlaying();

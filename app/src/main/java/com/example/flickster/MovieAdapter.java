@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.flickster.models.Movie;
 
 import java.util.ArrayList;
@@ -21,17 +22,25 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
 
     // list of movies
     ArrayList<Movie> movies;
+    // config needed for image urls
+    Config config;
+    // context for rendering
+    Context context;
 
     // intialize with list
     public MovieAdapter(ArrayList<Movie> movies) {
         this.movies = movies;
     }
 
+    public void setConfig(Config config) {
+        this.config = config;
+    }
+
     // creates and inflates a new view
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // get content and create the inflater
-        Context context = parent.getContext();
+        context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
         //create new view using the item-movie layout
@@ -48,7 +57,13 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         holder.tvTitle.setText(movie.getTitle());
         holder.tvOverview.setText(movie.getOverview());
 
-        // TODO - set image using glide
+        // set image using glide - build url for poster image
+        String imageUrl = config.getImageUrl(config.getPosterSize(), movie.getPosterPath());
+
+        // load image using glide
+        Glide.with(context)
+                .load(imageUrl)
+                .into(holder.tvPosterImage);
     }
 
     // returns the total number of items in the list
