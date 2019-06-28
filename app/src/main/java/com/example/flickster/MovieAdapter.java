@@ -60,9 +60,11 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         // set image using glide - build url for poster image
         String imageUrl = config.getImageUrl(config.getPosterSize(), movie.getPosterPath());
 
-        // load image using glide
+        // load image using glide (as well as placeholders while loading)
         Glide.with(context)
                 .load(imageUrl)
+                .placeholder(R.drawable.flicks_movie_placeholder)
+                .error(R.drawable.flicks_movie_placeholder)
                 .into(holder.tvPosterImage);
     }
 
