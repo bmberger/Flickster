@@ -3,12 +3,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.parceler.Parcel;
 
+@Parcel
 public class Movie {
     // values from API
     public String title;
     public String overview;
     public String posterPath; // only the path
     public String backdropPath;
+    public Double voteAverage;
 
     // no-arg, empty constructor required for Parceler
     public Movie() {}
@@ -19,6 +21,7 @@ public class Movie {
         overview = object.getString("overview");
         posterPath = object.getString("poster_path");
         backdropPath = object.getString("backdrop_path");
+        voteAverage = object.getDouble("vote_average");
     }
 
     public String getTitle() {
@@ -35,5 +38,9 @@ public class Movie {
 
     public String getBackdropPath() {
         return backdropPath;
+    }
+
+    public Double getVoteAverage() {
+        return voteAverage;
     }
 }
