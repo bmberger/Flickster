@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
 
         //set the request parameters (appended to url) aka shows that you are a verified user
         RequestParams params = new RequestParams();
-        params.put(API_KEY_PARAM, getString(R.string.api_key));
+        params.put(API_KEY_PARAM, getString(R.string.api_key_movie));
 
         client.get(url, params, new JsonHttpResponseHandler() {
             @Override
@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
 
         //set the request parameters (appended to url) aka shows that you are a verified user
         RequestParams params = new RequestParams();
-        params.put(API_KEY_PARAM, getString(R.string.api_key));
+        params.put(API_KEY_PARAM, getString(R.string.api_key_movie));
 
         // execute a GET request that gives us a JSON object response with data if a success
         client.get(url, params, new JsonHttpResponseHandler() {
